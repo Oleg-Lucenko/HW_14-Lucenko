@@ -74,11 +74,19 @@ class BankAccount {
 };
 
 class Bank {
+    private static instance: Bank;
     private readonly salaryProvider = new SalaryProvider();
     private readonly creditHistoryProvider = new CreditHistoryProvider();
     private readonly policeDBProvider = new PoliceDBProvider();
     private readonly accounts = new Map<BankAccount['number'], BankAccount>;
 
+    public static getInstance(): Bank {
+        if (!Bank.instance) {
+            Bank.instance = new Bank();
+        }
+
+        return Bank.instance;
+    }
 
     public addAccount(account: BankAccount, client: BankClient): void {
         this.accounts.set(account.number, account);
